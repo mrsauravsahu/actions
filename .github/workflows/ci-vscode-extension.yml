@@ -53,4 +53,3 @@ jobs:
           tag: v${{ steps.calculateVersion.outputs.AppVersion }}
           release: v${{ steps.calculateVersion.outputs.AppVersion }}-test
           artifacts: custom-profiles-for-vscode.v${{ steps.calculateVersion.outputs.AppVersion }}.vsix 
-          draft: true
