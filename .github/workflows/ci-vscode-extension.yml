@@ -2,11 +2,6 @@ name: "ci-vscode-extension"
 
 on:
   workflow_call:
-    inputs:
-      node-version:
-        description: 'Node version to use.'
-        required: true
-        type: string
 
 jobs:
   ci:
@@ -16,10 +11,17 @@ jobs:
       - name: Checkout to branch
         uses: actions/checkout@v2
 
+      - name: Calculate node version
+        id: calculateNodeVersion
+        run: |
+          NODE_VERSION=`cat .nvmrc`
+          echo "::set-output name=NodeVersion::$NODE_VERSION"
+          echo "node version = v$NODE_VERSION"
+
       - name: Setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ github.event.inputs.node-version }}
+          node-version: ${{ steps.calculateNodeVersion.outputs.NodeVersion }}
 
       - name: Install packages
         run: npm ci
