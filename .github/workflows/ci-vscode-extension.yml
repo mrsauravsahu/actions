@@ -48,12 +48,10 @@ jobs:
 
       - name: Create Release
         if: ${{ github.head_ref || github.ref_name }} != ${{ env.MAIN_BRANCH }}
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: ncipollo/release-action@v1
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: v${{ steps.calculateVersion.outputs.AppVersion }}
           release_name: v${{ steps.calculateVersion.outputs.AppVersion }}-test
           artifacts: custom-profiles-for-vscode.v${{ steps.calculateVersion.outputs.AppVersion }}.vsix 
           draft: true
-          prerelease: false
