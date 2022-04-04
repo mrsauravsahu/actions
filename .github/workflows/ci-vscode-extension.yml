@@ -38,3 +38,8 @@ jobs:
 
       - name: Build VSIX package
         run: npm run build -- -o custom-profiles-for-vscode.v${{ steps.calculateVersion.outputs.AppVersion }}.vsix
+
+      - uses: rickstaa/action-create-tag@v1
+        if: ${{ github.head_ref || github.ref_name }} != ${{ env.MAIN_BRANCH }}
+        with:
+          tag: v${{ steps.calculateVersion.outputs.AppVersion }}
